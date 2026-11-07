@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer" id="contact">
       <img className="footer__bg" src={asset('footer-bg.webp')} width={1440} height={690} alt="" loading="lazy" decoding="async" />
 
-      <div className="footer__cta" id="book">
+      <div className="footer__cta" id="book" data-reveal>
         <h2 className="footer__title">Your Building Should Run Smoothly. We Make Sure It Does.</h2>
         <p className="footer__subtitle">Book a service in minutes, or speak to the team first. No pressure either way.</p>
         <div className="footer__ctas">
@@ -18,7 +18,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="footer__card">
+      <div className="footer__card" data-reveal>
         <div className="footer__top">
           <div className="footer__brand">
             <img src={asset('footer-logo.svg')} width={100} height={28} alt="Fichaya" />

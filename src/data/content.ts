@@ -2,11 +2,26 @@
 
 export const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}`;
 
-/** Responsive WebP set: each photo is exported at 800, 1400 and 2752px wide (`<name>-<width>.webp`). */
-export const photo = (name: string) => ({
+/** Responsive WebP set: `<name>-<width>.webp` for each width (800/1400 plus the largest the source allows). */
+export const photo = (name: string, widths: number[] = [800, 1400, 2752]) => ({
   src: asset(`${name}-1400.webp`),
-  srcSet: [800, 1400, 2752].map((w) => `${asset(`${name}-${w}.webp`)} ${w}w`).join(', '),
+  srcSet: widths.map((w) => `${asset(`${name}-${w}.webp`)} ${w}w`).join(', '),
 });
+
+export type Photo = { name: string; widths?: number[]; position?: string };
+
+// Photos taken from the Fichaya Website Figma file (Homepage, Services and About Us pages).
+const photos = {
+  office: { name: 'services-bg-alt' },
+  cleaningCrew: { name: 'services-bg' },
+  housekeeping: { name: 'svc-housekeeping', widths: [800, 1400, 2000], position: '50% 30%' },
+  ac: { name: 'svc-ac', widths: [800, 1400, 2000], position: '40% 50%' },
+  power: { name: 'svc-power', widths: [800, 1400, 2000], position: '50% 45%' },
+  diesel: { name: 'svc-diesel', widths: [800, 1400, 2000], position: '50% 60%' },
+  deepCleaning: { name: 'svc-deep-cleaning', widths: [800, 1400, 2000], position: '50% 12%' },
+  workforce: { name: 'svc-workforce', position: '50% 30%' },
+  meeting: { name: 'svc-consumables', position: '60% 50%' },
+} satisfies Record<string, Photo>;
 
 export const navLinks = [
   { label: 'About Us', href: '#about' },
@@ -34,60 +49,59 @@ export const clientLogos = [
 ];
 
 // Services showcase (Figma: "3 items bento grid" → Background component).
-// The Figma file only has two background photos for this component; the rest alternate between them.
 export const services = [
   {
     title: 'General Property Operations',
     text: 'Comprehensive day-to-day property support, covering essential operational, maintenance, and facility management needs.',
-    image: 'services-bg-alt',
+    image: photos.office as Photo,
   },
   {
     title: 'Janitorial Management',
     text: 'Keep your property consistently clean, hygienic, and guest-ready with professionally managed janitorial services.',
-    image: 'services-bg',
+    image: photos.cleaningCrew as Photo,
   },
   {
     title: 'Housekeeping Services',
     text: 'Reliable housekeeping for a consistently comfortable space.',
-    image: 'services-bg-alt',
+    image: photos.housekeeping as Photo,
   },
   {
     title: 'AC Servicing & Maintenance',
     text: 'Keep your cooling systems efficient and running smoothly.',
-    image: 'services-bg',
+    image: photos.ac as Photo,
   },
   {
     // Copy not in the Figma file yet — placeholder.
     title: 'Generator & Power Management',
     text: 'Scheduled generator servicing and power monitoring so your building stays up when the grid goes down.',
-    image: 'services-bg-alt',
+    image: photos.power as Photo,
   },
   {
     // Copy not in the Figma file yet — placeholder.
     title: 'Diesel Supply',
     text: 'Planned diesel deliveries and stock tracking, so your generators never run dry.',
-    image: 'services-bg',
+    image: photos.diesel as Photo,
   },
   {
     title: 'Deep Cleaning',
     text: 'Thorough cleaning for a healthier, fresher environment.',
-    image: 'services-bg-alt',
+    image: photos.deepCleaning as Photo,
   },
   {
     title: 'Fumigation',
     text: 'Protect your property from pests with effective treatment.',
-    image: 'services-bg',
+    image: photos.cleaningCrew as Photo,
   },
   {
     title: 'Workforce Recruitment',
     text: 'Find reliable, skilled staff for your property needs.',
-    image: 'services-bg-alt',
+    image: photos.workforce as Photo,
   },
   {
     // Copy not in the Figma file yet — placeholder.
     title: 'Facility Consumables Supply',
     text: 'Restocking of cleaning supplies, toiletries, and everyday consumables, managed for you.',
-    image: 'services-bg',
+    image: photos.meeting as Photo,
   },
 ];
 
@@ -108,12 +122,12 @@ export const outcomes = [
 
 // Positions/rotations of the photo stack above "Reliable Outcomes", relative to a 1440px-wide stage
 // (each 229.5×222.8 photo is centred in its rotated Figma bounding box).
-export const outcomePhotos = [
-  { left: 272.97, top: 48.09, rotate: 8.97 },
-  { left: 437.28, top: 129.45, rotate: -11.25 },
-  { left: 634.9, top: 49.79, rotate: 0.81 },
-  { left: 775.57, top: 141.17, rotate: -11 },
-  { left: 935.16, top: 68.4, rotate: 10 },
+export const outcomePhotos: { src: string; alt: string; left: number; top: number; rotate: number }[] = [
+  { src: asset('stack-cleaner.webp'), alt: 'Maintenance crew member at work', left: 272.97, top: 48.09, rotate: 8.97 },
+  { src: asset('stack-kitchen.webp'), alt: 'Housekeeper cleaning an office kitchen', left: 437.28, top: 129.45, rotate: -11.25 },
+  { src: asset('stack-team.webp'), alt: 'Property operations team', left: 634.9, top: 49.79, rotate: 0.81 },
+  { src: asset('stack-ac.webp'), alt: 'Technician servicing an air-conditioning unit', left: 775.57, top: 141.17, rotate: -11 },
+  { src: asset('stack-power.webp'), alt: 'Electrical distribution board', left: 935.16, top: 68.4, rotate: 10 },
 ];
 
 export const metrics = [

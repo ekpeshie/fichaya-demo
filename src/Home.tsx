@@ -6,8 +6,10 @@ import Outcomes from './components/Outcomes';
 import Metrics from './components/Metrics';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
+import { useScrollReveal } from './lib/motion';
 
 export default function Home() {
+  useScrollReveal();
   return (
     <div className="page">
       <Navbar />

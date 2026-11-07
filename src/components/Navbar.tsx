@@ -5,6 +5,31 @@ export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const [floating, setFloating] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  // Float the bar once the page scrolls; tuck it away while scrolling down, bring it back on scroll up.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setFloating(y > 140);
+        if (Math.abs(y - lastY) > 6) {
+          setHidden(y > lastY && y > 480);
+          lastY = y;
+        }
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   useEffect(() => {
     const close = (e: MouseEvent | KeyboardEvent) => {
@@ -22,7 +47,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="nav-wrap">
+    <header
+      className={`nav-wrap${floating ? ' is-floating' : ''}${hidden && !servicesOpen && !mobileOpen ? ' is-hidden' : ''}`}
+    >
       <nav ref={navRef} className="nav" aria-label="Main">
         <div className="nav__bar">
           <a href="#top" className="nav__logo" aria-label="Fichaya home">

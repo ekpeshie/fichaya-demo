@@ -29,10 +29,22 @@ Set `SITE_URL` (e.g. `SITE_URL=https://fichaya.com npm run build`) to get the ca
 - Title, description, Open Graph/Twitter cards, `ProfessionalService` structured data (address, phone, services).
 - Self-hosted fonts (no Google Fonts round trip), inlined CSS, preloaded responsive hero image, lazy-loaded below-the-fold images.
 
+## Interactions
+
+All motion is turned off for visitors who prefer reduced motion, and none of it hides content from search engines (the prerendered HTML shows the final state).
+
+- **Navbar** floats after you scroll, hides while scrolling down and returns on scroll up. Links get a yellow underline on hover.
+- **Hero** photo eases in from a slight zoom; headline, buttons and description rise in.
+- **Scroll reveal**: sections fade up as they enter the viewport (`data-reveal`, `src/lib/motion.ts`).
+- **Services showcase** autoplays every 6 s. The progress pill is a timer and a pause/play button. It pauses on hover, keyboard focus, or when off screen. Arrow keys move between services. Each service has its own photo, loaded only when needed.
+- **Outcomes photos** are dealt out from a pile when the section appears, and lift on hover. Cards lift with a yellow outline.
+- **Metrics** count up when scrolled into view.
+- **Client logos** become an auto-scrolling marquee below 1100px.
+
 ## Notes
 
 - Some brand colours fail WCAG contrast: white text on the yellow buttons, and the light grey eyebrow/metric text. They match the Figma file, so they are left as designed.
 - Three services in the showcase (Generator & Power Management, Diesel Supply, Facility Consumables Supply) have no description in Figma yet, so they use placeholder copy in `content.ts`.
-- The Figma file has two photos for the services showcase. The services alternate between them.
+- Photos come from the Figma file's Homepage, Services and About Us pages. Fumigation reuses the cleaning-crew photo because the Figma fumigation shot is too low-resolution for the large panel.
 - There is only one testimonial in Figma. The slide indicator appears once there are two or more in `testimonials`.
 - Nav and footer links point to in-page anchors until the other pages are built.
